@@ -305,6 +305,12 @@ img {
 .skills__img {
   border-radius: 0.5rem;
 }
+.skills__prg{
+  width:65%;
+}
+.skills__back{
+  width:45%;
+}
 
 /* ===== WORK =====*/
 .work__container {
