@@ -234,50 +234,29 @@
         <!--===== MAIN JS =====-->
         <script src="assets/js/main.js"></script>
          <script>
-    const titleElement = document.querySelector('.home__title');
-    const text = titleElement.innerHTML;
+const roles = ["Content Creator", "YouTuber", "Blogger"];
+    let currentIndex = 0;
 
-    function changeText() {
-      // Split the content into lines
-      const lines = text.split('<br>').map(line => {
-        const span = document.createElement('span');
-        span.classList.add('line');
-        span.innerHTML = line;
-        return span;
-      });
+    function changeRole() {
+      const roleElement = document.getElementById('role');
+      const currentRole = roles[currentIndex];
       
-      // Clear the existing content
-      titleElement.innerHTML = '';
-      lines.forEach(line => titleElement.appendChild(line));
-
-      // Reset the lines' animation for a clean slate
+      // Fade out current role
+      roleElement.classList.add('cut-left');
+      
+      // Change the content after 0.5 seconds (to allow cut effect)
       setTimeout(() => {
-        // Cut lines from right to left
-        let delay = 0;
-        lines.reverse().forEach((line, index) => {
-          setTimeout(() => {
-            line.classList.add('cut-left');
-          }, delay);
-          delay += 300; // Adjust delay between lines
-        });
+        currentIndex = (currentIndex + 1) % roles.length;
+        roleElement.textContent = roles[currentIndex];
         
-        // Add new lines after cutting
-        setTimeout(() => {
-          const newLines = text.split('<br>').map(line => {
-            const span = document.createElement('span');
-            span.classList.add('line', 'new-line');
-            span.innerHTML = line;
-            return span;
-          });
-
-          titleElement.innerHTML = '';
-          newLines.forEach(line => titleElement.appendChild(line));
-        }, delay + 500); // Adjust the time before replacing
-      }, 1000); // Time for initial fade
+        // Fade in the new role
+        roleElement.classList.remove('cut-left');
+        roleElement.classList.add('new-role');
+      }, 500);
     }
 
-    // Change text every 5 seconds
-    setInterval(changeText, 5000);
+    // Change role every 3 seconds
+    setInterval(changeRole, 3000);
   </script>
     </body>
 </html>
