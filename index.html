@@ -11,6 +11,36 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
         <title>Ghanashyam Portfolio Website</title>
+          <style>
+    .home__title {
+      font-size: 30px;
+      font-weight: bold;
+      display: inline-block;
+      white-space: nowrap;
+    }
+
+    .home__title-color {
+      color: red;
+    }
+
+    .line {
+      display: inline-block;
+      opacity: 1;
+      margin: 0 5px;
+      transition: transform 0.5s ease, opacity 0.5s ease;
+    }
+
+    .cut-left {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+
+    .new-line {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  </style>
+
     </head>
     <body>
         <!--===== HEADER =====-->
@@ -203,5 +233,51 @@
 
         <!--===== MAIN JS =====-->
         <script src="assets/js/main.js"></script>
+         <script>
+    const titleElement = document.querySelector('.home__title');
+    const text = titleElement.innerHTML;
+
+    function changeText() {
+      // Split the content into lines
+      const lines = text.split('<br>').map(line => {
+        const span = document.createElement('span');
+        span.classList.add('line');
+        span.innerHTML = line;
+        return span;
+      });
+      
+      // Clear the existing content
+      titleElement.innerHTML = '';
+      lines.forEach(line => titleElement.appendChild(line));
+
+      // Reset the lines' animation for a clean slate
+      setTimeout(() => {
+        // Cut lines from right to left
+        let delay = 0;
+        lines.reverse().forEach((line, index) => {
+          setTimeout(() => {
+            line.classList.add('cut-left');
+          }, delay);
+          delay += 300; // Adjust delay between lines
+        });
+        
+        // Add new lines after cutting
+        setTimeout(() => {
+          const newLines = text.split('<br>').map(line => {
+            const span = document.createElement('span');
+            span.classList.add('line', 'new-line');
+            span.innerHTML = line;
+            return span;
+          });
+
+          titleElement.innerHTML = '';
+          newLines.forEach(line => titleElement.appendChild(line));
+        }, delay + 500); // Adjust the time before replacing
+      }, 1000); // Time for initial fade
+    }
+
+    // Change text every 5 seconds
+    setInterval(changeText, 5000);
+  </script>
     </body>
 </html>
